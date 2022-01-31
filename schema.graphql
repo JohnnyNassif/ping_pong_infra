@@ -1,0 +1,84 @@
+type Query {
+
+	players: [Player]!
+	player(player_id: ID!): Player!
+	
+	games: [Game]!
+	game(game_id: ID!): Game!
+	displayGames: [DisplayGame]!
+
+	ranks: [Rank]!
+}
+
+type Mutation {
+	
+	addPlayer(input: AddPlayerInput!): Player!
+	addGame(input: AddGameInput!): Game!
+
+	addGamePoint(game_id: Int!, player_id: Int!): Game!
+}
+
+type Player {
+	player_id: ID!
+	player_name: String!
+	profile_pic: String!
+	age: Int!
+	country: String!
+	created_at: AWSDateTime!
+	total_points: Int
+}
+
+type Game {
+	game_id: ID!
+	event_name : String!
+	subevent_name: String!
+	player_1: Int!
+	player_2: Int!
+	player_1_score: Int
+	player_2_score: Int
+	winner_id: Int
+	start_time: AWSDateTime!
+	end_time: AWSDateTime    
+}
+
+type DisplayGame {
+	game_id: ID!
+	event_name : String!
+	subevent_name: String!
+	player_1_name: String!
+	player_2_name: String!
+	player_1_profile: String!
+	player_2_profile: String!
+	player_1_score: Int
+	player_2_score: Int
+	score_description: String
+}
+
+type Rank {
+	rank: Int!
+	game_type: String!
+	player_id: Int!
+	total_points: Int!
+	player_name: String!
+	player_country: String!
+	player_profile_pic: String!
+}
+
+input AddPlayerInput {
+	player_name: String!
+	profile_pic: String!
+	age: Int!
+	country: String!
+}
+
+input AddGameInput {
+	player_1: Int!
+	player_2: Int!
+	event_name: String!
+	subevent_name: String!
+}
+
+schema {
+	query: Query
+	mutation: Mutation
+}
